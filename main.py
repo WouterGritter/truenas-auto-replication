@@ -7,9 +7,7 @@ import requests
 
 
 def load_dotenv():
-    # Get the directory where the current script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    dotenv_path = os.path.join(script_dir, '.env')
+    dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
 
     if os.path.exists(dotenv_path):
         with open(dotenv_path, 'r') as file:
@@ -25,13 +23,13 @@ def load_dotenv():
                     # Remove surrounding quotes from value if they exist
                     if value.startswith('"') and value.endswith('"'):
                         value = value[1:-1]
-                    elif value.startswith("'") and value.endswith("'"):
+                    elif value.startswith('\'') and value.endswith('\''):
                         value = value[1:-1]
 
                     # Set the environment variable
                     os.environ[key] = value
     else:
-        raise FileNotFoundError(f"No .env file found in the directory: {script_dir}")
+        raise FileNotFoundError(f'No .env file found in the script directory.')
 
 
 load_dotenv()
@@ -146,7 +144,8 @@ def main():
     # Ensure the system is on for at least MIN_EXECUTION_TIME seconds, to allow the creation of the 'no_shutdown' file by the server administrator.
     time.sleep(max(0.0, MIN_EXECUTION_TIME - elapsed))
 
-    perform_shutdown = not os.path.exists('no_shutdown')
+    no_shutdown_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'no_shutdown')
+    perform_shutdown = not os.path.exists(no_shutdown_file)
 
     pool_usage = get_zpool_usage()[ZPOOL_NAME]
     discord_message = (f'Performed `{len(replications)}` replications in `{format_time(elapsed)}`.\n'
