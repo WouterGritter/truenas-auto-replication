@@ -12,6 +12,7 @@ DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 ZPOOL_NAME = os.getenv('ZPOOL_NAME')
 
 print(f'{DISCORD_WEBHOOK_URL=}')
+print(f'{ZPOOL_NAME=}')
 
 
 def query_replications():
