@@ -38,6 +38,7 @@ load_dotenv()
 
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 ZPOOL_NAME = os.getenv('ZPOOL_NAME')
+MIN_EXECUTION_TIME = float(os.getenv('MIN_EXECUTION_TIME', 90.0))
 
 print(f'{DISCORD_WEBHOOK_URL=}')
 print(f'{ZPOOL_NAME=}')
@@ -142,8 +143,8 @@ def main():
 
     elapsed = time.time() - start
 
-    # Ensure the system is on for at least 90 seconds, to allow the creation of the 'no_shutdown' file by the server administrator.
-    time.sleep(max(0.0, 90 - elapsed))
+    # Ensure the system is on for at least MIN_EXECUTION_TIME seconds, to allow the creation of the 'no_shutdown' file by the server administrator.
+    time.sleep(max(0.0, MIN_EXECUTION_TIME - elapsed))
 
     perform_shutdown = not os.path.exists('no_shutdown')
 
