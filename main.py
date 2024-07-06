@@ -104,11 +104,11 @@ def format_time(seconds):
 
     time_components = []
     if hours > 0:
-        time_components.append(f'{hours} hours')
+        time_components.append(f'{hours:.0f} hours')
     if minutes > 0:
-        time_components.append(f'{minutes} minutes')
+        time_components.append(f'{minutes:.0f} minutes')
     if seconds > 0 or not time_components:
-        time_components.append(f'{seconds} seconds')
+        time_components.append(f'{seconds:.1f} seconds')
 
     if len(time_components) > 1:
         return ', '.join(time_components[:-1]) + ' and ' + time_components[-1]
@@ -149,7 +149,7 @@ def main():
     perform_shutdown = not os.path.exists('no_shutdown')
 
     pool_usage = get_zpool_usage()[ZPOOL_NAME]
-    discord_message = (f'Performed {len(replications)} replications in {format_time(elapsed)}.\n'
+    discord_message = (f'Performed `{len(replications)}` replications in `{format_time(elapsed)}`.\n'
                        f'Pool usage: `{pool_usage["cap"]}` (`{pool_usage["free"]}` free of `{pool_usage["size"]}`)\n'
                        f'Health: `{pool_usage["health"]}`')
     if perform_shutdown:
