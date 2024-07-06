@@ -5,7 +5,36 @@ import os
 
 import requests
 
-os.system('source .env')
+
+def load_dotenv():
+    # Get the directory where the current script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    dotenv_path = os.path.join(script_dir, '.env')
+
+    if os.path.exists(dotenv_path):
+        with open(dotenv_path, 'r') as file:
+            for line in file:
+                # Strip leading/trailing whitespace and ignore empty lines or comments
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    # Split at the first '=' and strip any extra whitespace
+                    key, value = line.split('=', 1)
+                    key = key.strip()
+                    value = value.strip()
+
+                    # Remove surrounding quotes from value if they exist
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1]
+                    elif value.startswith("'") and value.endswith("'"):
+                        value = value[1:-1]
+
+                    # Set the environment variable
+                    os.environ[key] = value
+    else:
+        raise FileNotFoundError(f"No .env file found in the directory: {script_dir}")
+
+
+load_dotenv()
 
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 ZPOOL_NAME = os.getenv('ZPOOL_NAME')
