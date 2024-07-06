@@ -4,9 +4,8 @@ import time
 import os
 
 import requests
-from dotenv import load_dotenv
 
-load_dotenv()
+os.system('source .env')
 
 DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 ZPOOL_NAME = os.getenv('ZPOOL_NAME')
