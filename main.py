@@ -39,6 +39,7 @@ MIN_EXECUTION_TIME = float(os.getenv('MIN_EXECUTION_TIME', 90.0))
 
 print(f'{DISCORD_WEBHOOK_URL=}')
 print(f'{ZPOOL_NAME=}')
+print(f'{MIN_EXECUTION_TIME=}')
 
 
 def query_replications():
